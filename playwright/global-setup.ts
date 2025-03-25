@@ -48,8 +48,9 @@ async function globalSetup(config: FullConfig) {
   const page = await browser.newPage();
 
   //Log in with credentials.
-  await waitForFrontend('http://xfd-frontend-1:3000');
-  await page.goto('http://xfd-frontend-1:3000');
+  // await waitForFrontend('http://xfd-frontend-1:3000');
+  // await page.goto('http://xfd-frontend-1:3000');
+  await page.goto('http://localhost');
   await page.getByTestId('button').click();
   await page
     .getByLabel('Username (Email)')

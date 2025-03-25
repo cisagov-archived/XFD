@@ -3,10 +3,12 @@
     "url": "https://github.com/cisagov/crossfeed/issues"
   },
   "dependencies": {
+    "@playwright/test": "^1.51.1",
     "react-router-hash-link": "^2.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
+    "@types/node": "^22.13.13",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.57.1",
