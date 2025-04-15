@@ -1,6 +1,14 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import classes from './Risk.module.scss';
-import { Box, Card, CardContent, Grid, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Paper,
+  Typography
+} from '@mui/material';
 import VulnerabilityCard from './VulnerabilityCard';
 import TopVulnerablePorts from './TopVulnerablePorts';
 import TopVulnerableDomains from './TopVulnerableDomains';
@@ -31,6 +39,7 @@ import { useLocation } from 'react-router-dom';
 import { useUserTypeFilters } from 'hooks/useUserTypeFilters';
 import { useStaticsContext } from 'context/StaticsContext';
 import { useUserLevel } from 'hooks/useUserLevel';
+import { FilterAlt } from '@mui/icons-material';
 
 export interface Point {
   id: string;
@@ -332,6 +341,9 @@ const Risk: React.FC<ContextType> = ({
         <RiskRoot className={classes.root}>
           <div id="wrapper" className={contentWrapper}>
             <Box sx={{ px: '1rem', pb: '2rem' }}>
+              <Button variant="contained" endIcon={<FilterAlt />}>
+                Filter
+              </Button>
               <FilterTags
                 filters={filtersToDisplay}
                 removeFilter={removeFilter}

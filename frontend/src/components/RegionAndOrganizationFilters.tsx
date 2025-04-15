@@ -24,6 +24,7 @@ import {
 } from 'hooks/useUserTypeFilters';
 import { SearchBar } from './SearchBar';
 import { useHistory, useLocation } from 'react-router-dom';
+import { FilterTags } from 'pages/Search/FilterTags';
 
 const GLOBAL_ADMIN = 3;
 const REGIONAL_ADMIN = 2;
@@ -247,155 +248,167 @@ export const RegionAndOrganizationFilters: React.FC<
           }}
         />
       </Box>
-      <Accordion
+      <Divider />
+      <Box padding={2}>
+        <Autocomplete
+          options={regions}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Regions"
+              onBlur={() => setIsOpen(false)}
+            />
+          )}
+        />
+        <FilterTags filters={filters} removeFilter={removeFilter} />
+      </Box>
+      {/* <Accordion
         expanded={userLevel === STANDARD_USER ? true : undefined}
         defaultExpanded
-      >
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography>Region(s)</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <List>
-            {showUsersRegionDisabled && user?.regionId ? (
-              <ListItem sx={{ padding: '0px' }} key={user?.regionId}>
-                <FormGroup>
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    disabled={true}
-                    label={`Region ${user?.regionId}`}
-                    checked={true}
-                    sx={{ padding: '0px' }}
-                  />
-                </FormGroup>
-              </ListItem>
-            ) : (
-              regions.map((region) => {
-                return (
-                  <RegionItem
-                    key={`region-item-${region}`}
-                    handleChange={handleCheckboxChange}
-                    regionId={region}
-                    checked={regionExistsInFilters(region) ?? false}
-                  />
-                );
-              })
-            )}
-          </List>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
+      > */}
+      {/* <AccordionSummary expandIcon={<ExpandMore />}> */}
+      {/* <Typography>Region(s)</Typography> */}
+      {/* </AccordionSummary> */}
+      {/* <AccordionDetails> */}
+      <List>
+        {showUsersRegionDisabled && user?.regionId ? (
+          <ListItem sx={{ padding: '0px' }} key={user?.regionId}>
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox />}
+                disabled={true}
+                label={`Region ${user?.regionId}`}
+                checked={true}
+                sx={{ padding: '0px' }}
+              />
+            </FormGroup>
+          </ListItem>
+        ) : (
+          regions.map((region) => {
+            return (
+              <RegionItem
+                key={`region-item-${region}`}
+                handleChange={handleCheckboxChange}
+                regionId={region}
+                checked={regionExistsInFilters(region) ?? false}
+              />
+            );
+          })
+        )}
+      </List>
+      {/* </AccordionDetails> */}
+      {/* </Accordion> */}
+      {/* <Accordion
         defaultExpanded
         expanded={userLevel === STANDARD_USER ? true : undefined}
       >
         <AccordionSummary expandIcon={<ExpandMore />}>
           <Typography>Organization(s)</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-          {/* Need to reconcile type issues caused by adding freeSolo prop */}
-          {userLevel !== STANDARD_USER ? (
-            <Autocomplete
-              onInputChange={(e, v) => {
-                if (e && e.type === 'change') {
-                  handleTextChange(v);
-                }
-              }}
-              inputValue={searchTerm}
-              // freeSolo
-              disableClearable
-              open={isOpen}
-              onOpen={() => {
-                setIsOpen(true);
-              }}
-              options={orgResults}
-              onChange={(e, v) => {
-                setTimeout(() => {
-                  handleAddOrganization(v);
-                }, 250);
-                return;
-              }}
-              getOptionLabel={(option) => option.name}
-              ListboxProps={{
-                sx: {
-                  ':active': {
-                    bgcolor: 'transparent'
-                  }
-                }
-              }}
-              renderOption={(params, option) => {
-                return (
-                  <li
-                    {...params}
-                    style={{ pointerEvents: 'none', padding: 0 }}
-                    key={option.id}
-                  >
-                    <Button
-                      sx={{
-                        pointerEvents: 'auto',
-                        height: '100%',
-                        width: '100%',
-                        display: 'flex',
-                        textAlign: 'left',
-                        justifyContent: 'start',
-                        fontWeight: 400,
-                        color: 'black',
-                        textTransform: 'none'
-                      }}
-                      id="search-org-button"
-                      onClick={() =>
-                        setTimeout(() => {
-                          handleAddOrganization(option);
-                        }, 250)
-                      }
-                    >
-                      {option.name}
-                    </Button>
-                  </li>
-                );
-              }}
-              isOptionEqualToValue={(option, value) =>
-                option?.name === value?.name
+        <AccordionDetails> */}
+      {/* Need to reconcile type issues caused by adding freeSolo prop */}
+      {userLevel !== STANDARD_USER ? (
+        <Autocomplete
+          onInputChange={(e, v) => {
+            if (e && e.type === 'change') {
+              handleTextChange(v);
+            }
+          }}
+          inputValue={searchTerm}
+          // freeSolo
+          disableClearable
+          open={isOpen}
+          onOpen={() => {
+            setIsOpen(true);
+          }}
+          options={orgResults}
+          onChange={(e, v) => {
+            setTimeout(() => {
+              handleAddOrganization(v);
+            }, 250);
+            return;
+          }}
+          getOptionLabel={(option) => option.name}
+          ListboxProps={{
+            sx: {
+              ':active': {
+                bgcolor: 'transparent'
               }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Search Organizations"
-                  onBlur={() => setIsOpen(false)}
-                />
-              )}
+            }
+          }}
+          renderOption={(params, option) => {
+            return (
+              <li
+                {...params}
+                style={{ pointerEvents: 'none', padding: 0 }}
+                key={option.id}
+              >
+                <Button
+                  sx={{
+                    pointerEvents: 'auto',
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    textAlign: 'left',
+                    justifyContent: 'start',
+                    fontWeight: 400,
+                    color: 'black',
+                    textTransform: 'none'
+                  }}
+                  id="search-org-button"
+                  onClick={() =>
+                    setTimeout(() => {
+                      handleAddOrganization(option);
+                    }, 250)
+                  }
+                >
+                  {option.name}
+                </Button>
+              </li>
+            );
+          }}
+          isOptionEqualToValue={(option, value) => option?.name === value?.name}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search Organizations"
+              onBlur={() => setIsOpen(false)}
             />
-          ) : (
-            <></>
           )}
-          <List sx={{ width: '100%' }}>
-            {organizationsInFilters?.map((org) => {
-              return (
-                <ListItem key={org.id} sx={{ padding: '0px' }}>
-                  <FormGroup>
-                    <FormControlLabel
-                      sx={{ padding: '0px' }}
-                      disabled={userLevel === STANDARD_USER}
-                      label={org?.name}
-                      control={<Checkbox />}
-                      checked={true}
-                      onChange={() => {
-                        const exists = organizationsInFilters.find(
-                          (organization) => organization.id === org.id
-                        );
-                        if (exists) {
-                          removeFilter(ORGANIZATION_FILTER_KEY, org, 'any');
-                        } else {
-                          addFilter(ORGANIZATION_FILTER_KEY, org, 'any');
-                        }
-                      }}
-                    />
-                  </FormGroup>
-                </ListItem>
-              );
-            })}
-          </List>
-          <br />
-        </AccordionDetails>
-      </Accordion>
+        />
+      ) : (
+        <></>
+      )}
+      <List sx={{ width: '100%' }}>
+        {organizationsInFilters?.map((org) => {
+          return (
+            <ListItem key={org.id} sx={{ padding: '0px' }}>
+              <FormGroup>
+                <FormControlLabel
+                  sx={{ padding: '0px' }}
+                  disabled={userLevel === STANDARD_USER}
+                  label={org?.name}
+                  control={<Checkbox />}
+                  checked={true}
+                  onChange={() => {
+                    const exists = organizationsInFilters.find(
+                      (organization) => organization.id === org.id
+                    );
+                    if (exists) {
+                      removeFilter(ORGANIZATION_FILTER_KEY, org, 'any');
+                    } else {
+                      addFilter(ORGANIZATION_FILTER_KEY, org, 'any');
+                    }
+                  }}
+                />
+              </FormGroup>
+            </ListItem>
+          );
+        })}
+      </List>
+      <br />
+      {/* </AccordionDetails>
+      </Accordion> */}
     </>
   );
 };

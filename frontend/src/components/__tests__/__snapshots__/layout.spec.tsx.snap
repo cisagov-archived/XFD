@@ -45,28 +45,24 @@ exports[`Layout component matches snapshot 1`] = `
               role="presentation"
             >
               <div
-                class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-y44dvl-MuiToolbar-root"
+                class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-1yo9slo-MuiToolbar-root"
               >
-                <div
-                  class="MuiStack-root css-1sos3zc-MuiStack-root"
+                <h3
+                  class="MuiTypography-root MuiTypography-h6 css-ueod1h-MuiTypography-root"
                 >
-                  <h3
-                    class="MuiTypography-root MuiTypography-h6 css-ueod1h-MuiTypography-root"
-                  >
-                    Filters
-                  </h3>
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                    data-testid="FilterAltIcon"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61z"
-                    />
-                  </svg>
-                </div>
+                  Filter
+                </h3>
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="CloseIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
               </div>
               <hr
                 class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
@@ -101,169 +97,138 @@ exports[`Layout component matches snapshot 1`] = `
                   </div>
                 </div>
               </div>
+              <hr
+                class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+              />
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded Mui-expanded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
+                class="MuiBox-root css-19midj6"
               >
                 <div
-                  aria-expanded="true"
-                  class="MuiButtonBase-root MuiAccordionSummary-root Mui-expanded MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
-                  role="button"
-                  tabindex="0"
+                  class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1h51icj-MuiAutocomplete-root"
                 >
                   <div
-                    class="MuiAccordionSummary-content Mui-expanded MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-uyc727-MuiTypography-root"
+                    <label
+                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-1kpp2c0-MuiFormLabel-root-MuiInputLabel-root"
+                      data-shrink="false"
+                      for=":r1:"
+                      id=":r1:-label"
                     >
-                      Region(s)
-                    </p>
-                  </div>
-                  <div
-                    class="MuiAccordionSummary-expandIconWrapper Mui-expanded css-yw020d-MuiAccordionSummary-expandIconWrapper"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="ExpandMoreIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div
-                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
-                  style="min-height: 0px;"
-                >
-                  <div
-                    class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
-                  >
+                      Regions
+                    </label>
                     <div
-                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+                      class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-11xr8mx-MuiInputBase-root-MuiOutlinedInput-root"
                     >
+                      <input
+                        aria-autocomplete="list"
+                        aria-expanded="false"
+                        aria-invalid="false"
+                        autocapitalize="none"
+                        autocomplete="off"
+                        class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
+                        id=":r1:"
+                        role="combobox"
+                        spellcheck="false"
+                        type="text"
+                        value=""
+                      />
                       <div
-                        class="MuiAccordion-region"
-                        role="region"
+                        class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
                       >
-                        <div
-                          class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                        <button
+                          aria-label="Open"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-17pw5b2-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                          tabindex="-1"
+                          title="Open"
+                          type="button"
                         >
-                          <ul
-                            class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="ArrowDropDownIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
                           >
-                            <li
-                              class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1cjmx1v-MuiListItem-root"
-                            >
-                              <div
-                                class="MuiFormGroup-root css-dmmspl-MuiFormGroup-root"
-                              >
-                                <label
-                                  class="MuiFormControlLabel-root Mui-disabled MuiFormControlLabel-labelPlacementEnd css-lc0130-MuiFormControlLabel-root"
-                                >
-                                  <span
-                                    aria-disabled="true"
-                                    class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium Mui-disabled PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium Mui-checked Mui-disabled MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-1a35bqc-MuiButtonBase-root-MuiCheckbox-root"
-                                    tabindex="-1"
-                                  >
-                                    <input
-                                      checked=""
-                                      class="PrivateSwitchBase-input css-1m9pwf3"
-                                      data-indeterminate="false"
-                                      disabled=""
-                                      type="checkbox"
-                                    />
-                                    <svg
-                                      aria-hidden="true"
-                                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxIcon"
-                                      focusable="false"
-                                      viewBox="0 0 24 24"
-                                    >
-                                      <path
-                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                                      />
-                                    </svg>
-                                  </span>
-                                  <span
-                                    class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label Mui-disabled css-uyc727-MuiTypography-root"
-                                  >
-                                    Region 1234
-                                  </span>
-                                </label>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded Mui-expanded MuiAccordion-gutters css-1elwnq4-MuiPaper-root-MuiAccordion-root"
-              >
-                <div
-                  aria-expanded="true"
-                  class="MuiButtonBase-root MuiAccordionSummary-root Mui-expanded MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
-                  role="button"
-                  tabindex="0"
-                >
-                  <div
-                    class="MuiAccordionSummary-content Mui-expanded MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-uyc727-MuiTypography-root"
-                    >
-                      Organization(s)
-                    </p>
-                  </div>
-                  <div
-                    class="MuiAccordionSummary-expandIconWrapper Mui-expanded css-yw020d-MuiAccordionSummary-expandIconWrapper"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                      data-testid="ExpandMoreIcon"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div
-                  class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
-                  style="min-height: 0px;"
-                >
-                  <div
-                    class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
-                  >
-                    <div
-                      class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
-                    >
-                      <div
-                        class="MuiAccordion-region"
-                        role="region"
-                      >
-                        <div
-                          class="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
-                        >
-                          <ul
-                            class="MuiList-root MuiList-padding css-1lbrbe2-MuiList-root"
+                            <path
+                              d="M7 10l5 5 5-5z"
+                            />
+                          </svg>
+                          <span
+                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                           />
-                          <br />
-                        </div>
+                        </button>
                       </div>
+                      <fieldset
+                        aria-hidden="true"
+                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                      >
+                        <legend
+                          class="css-yjsfm1"
+                        >
+                          <span>
+                            Regions
+                          </span>
+                        </legend>
+                      </fieldset>
                     </div>
                   </div>
                 </div>
+                <div
+                  aria-atomic="true"
+                  aria-live="polite"
+                  class="css-1op2mss"
+                />
               </div>
+              <ul
+                class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+              >
+                <li
+                  class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1cjmx1v-MuiListItem-root"
+                >
+                  <div
+                    class="MuiFormGroup-root css-dmmspl-MuiFormGroup-root"
+                  >
+                    <label
+                      class="MuiFormControlLabel-root Mui-disabled MuiFormControlLabel-labelPlacementEnd css-lc0130-MuiFormControlLabel-root"
+                    >
+                      <span
+                        aria-disabled="true"
+                        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium Mui-disabled PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium Mui-checked Mui-disabled MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-1a35bqc-MuiButtonBase-root-MuiCheckbox-root"
+                        tabindex="-1"
+                      >
+                        <input
+                          checked=""
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          data-indeterminate="false"
+                          disabled=""
+                          type="checkbox"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="CheckBoxIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label Mui-disabled css-uyc727-MuiTypography-root"
+                      >
+                        Region 1234
+                      </span>
+                    </label>
+                  </div>
+                </li>
+              </ul>
+              <ul
+                class="MuiList-root MuiList-padding css-1lbrbe2-MuiList-root"
+              />
+              <br />
             </div>
           </div>
         </div>
