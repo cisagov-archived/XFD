@@ -25,7 +25,6 @@ import {
 } from 'hooks/useUserTypeFilters';
 import { SearchBar } from './SearchBar';
 import { useHistory, useLocation } from 'react-router-dom';
-import { set } from 'date-fns';
 // import { FilterTags } from 'pages/Search/FilterTags';
 
 const GLOBAL_ADMIN = 3;
