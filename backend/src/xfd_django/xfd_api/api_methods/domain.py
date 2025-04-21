@@ -3,6 +3,8 @@
 # Standard Python Libraries
 import csv
 import io
+import re
+from typing import Any, Dict
 
 # Third-Party Libraries
 from django.core.paginator import Paginator
@@ -12,8 +14,9 @@ from fastapi import HTTPException
 from ..auth import get_org_memberships, is_global_view_admin
 from ..helpers.filter_helpers import apply_domain_filters, sort_direction
 from ..helpers.s3_client import S3Client
-from ..models import Domain, Service
+from ..models import Domain, Service, User
 from ..schema_models.domain import DomainSearch
+from ..tasks.es_client import ESClient
 
 
 def get_domain_by_id(domain_id: str):
@@ -225,3 +228,63 @@ def export_domains(domain_search: DomainSearch, current_user):
         # Log the exception for debugging (optional)
         print("Error exporting domains: {}".format(e))
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# POST: /search/domains
+def escape_special_characters(search_term: str) -> str:
+    """Escape special characters in the search term."""
+    special_chars = r"([\+\-\&\|\!\(\)\{\}\[\]\^\"\~\*\?\:\\])"
+    return re.sub(special_chars, r"\\\1", search_term)
+
+
+def search_domains_task(search_body, current_user: User):
+    """Handle the logic for searching domians in Elasticsearch."""
+    try:
+        # Check if user is GlobalViewAdmin or has memberships
+        if not is_global_view_admin(current_user) and not get_org_memberships(
+            current_user
+        ):
+            return []
+
+        # Initialize Elasticsearch client
+        client = ESClient()
+
+        # Construct the Elasticsearch query
+
+        query_body: Dict[str, Any] = {"query": {"bool": {"must": [], "filter": []}}}
+
+        # Use match_all if searchTerm is empty
+        if search_body.searchTerm.strip():
+            sanitized_search_term = escape_special_characters(search_body.searchTerm)
+            query_body["query"]["bool"]["must"].append(
+                {
+                    "query_string": {
+                        "query": "*{}*".format(sanitized_search_term),
+                        "fields": ["name"],
+                        "fuzziness": "AUTO",
+                        "analyze_wildcard": True,
+                    }
+                }
+            )
+        else:
+            query_body["query"]["bool"]["must"].append({"match_all": {}})
+
+        # Add region filters if provided
+        if search_body.regions:
+            query_body["query"]["bool"]["filter"].append(
+                {"terms": {"regionId": search_body.regions}}
+            )
+
+        # Log the query for debugging
+        print("Query body: {}".format(query_body))
+
+        # Execute the search
+        search_results = client.search_domains(query_body)
+
+        return {"body": search_results}
+
+    except Exception as e:
+        print(e)
+        raise HTTPException(
+            status_code=500, detail="An error occurred while searching organizations."
+        )

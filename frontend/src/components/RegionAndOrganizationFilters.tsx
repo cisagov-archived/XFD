@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { useAuthContext } from 'context';
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
+  // Accordion,
+  // AccordionDetails,
+  // AccordionSummary,
   Autocomplete,
   Box,
   Button,
@@ -14,9 +14,10 @@ import {
   List,
   ListItem,
   TextField,
-  Typography
+  // Typography,
+  Stack
 } from '@mui/material';
-import { ExpandMore } from '@mui/icons-material';
+// import { ExpandMore } from '@mui/icons-material';
 import { useStaticsContext } from 'context/StaticsContext';
 import {
   ORGANIZATION_EXCLUSIONS,
@@ -24,7 +25,8 @@ import {
 } from 'hooks/useUserTypeFilters';
 import { SearchBar } from './SearchBar';
 import { useHistory, useLocation } from 'react-router-dom';
-import { FilterTags } from 'pages/Search/FilterTags';
+import { set } from 'date-fns';
+// import { FilterTags } from 'pages/Search/FilterTags';
 
 const GLOBAL_ADMIN = 3;
 const REGIONAL_ADMIN = 2;
@@ -57,6 +59,7 @@ interface RegionAndOrganizationFiltersProps {
   filters: any[];
   setSearchTerm: (s: string, opts?: any) => void;
   searchTerm: string;
+  results?: any;
 }
 
 export const RegionAndOrganizationFilters: React.FC<
@@ -66,8 +69,10 @@ export const RegionAndOrganizationFilters: React.FC<
   removeFilter,
   filters,
   searchTerm: domainSearchTerm,
-  setSearchTerm: setDomainSearchTerm
+  setSearchTerm: setDomainSearchTerm,
+  results
 }) => {
+  console.log('results', results);
   const { setShowMaps, user, apiPost } = useAuthContext();
 
   const { regions } = useStaticsContext();
@@ -88,6 +93,7 @@ export const RegionAndOrganizationFilters: React.FC<
       userLevel = REGIONAL_ADMIN;
     }
   }
+
   const searchOrganizations = useCallback(
     async (searchTerm: string, regions?: string[]) => {
       try {
@@ -227,22 +233,89 @@ export const RegionAndOrganizationFilters: React.FC<
     }
   };
 
+  const domainNamesAndIps: { name: string; ip: string }[] = useMemo(() => {
+    if (!results) return [];
+    return results.map((result: any) => {
+      let domainName = '';
+      let domainIp = '';
+      if (typeof result.name === 'object' && result.name !== null) {
+        domainName = result.name.raw || '';
+      } else {
+        domainName = result.name || '';
+      }
+      if (typeof result.ip === 'object' && result.ip !== null) {
+        domainIp = result.ip.raw || '';
+      } else {
+        domainIp = result.ip || '';
+      }
+      return { name: domainName, ip: domainIp };
+    });
+  }, [results]);
+
+  console.log('domainNamesAndIps', domainNamesAndIps);
+
+  // const applyFilters = () => {
+  //   setDomainSearchTerm(searchTerm, {
+  //     shouldClearFilters: false,
+  //     refresh: true
+  //   });
+  // };
+  // const resetFilters = () => {
+  //   setDomainSearchTerm('', {
+  //     shouldClearFilters: true,
+  //     refresh: true
+  //   });
+  //   setSearchTerm('');
+  // };
+
   return (
     <>
       <Divider />
       <Box padding={2}>
+        <Autocomplete
+          options={domainNamesAndIps}
+          getOptionLabel={(option) => `${option.name} (${option.ip})`}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Domain"
+              onBlur={() => setIsOpen(false)}
+              disabled={userLevel === STANDARD_USER}
+            />
+          )}
+          onChange={(_, v) => {
+            if (v && location.pathname !== '/inventory') {
+              history.push(`/inventory?q=${v.name}`);
+              setDomainSearchTerm(v.name, {
+                shouldClearFilters: false
+              });
+            }
+          }}
+          onInputChange={(event, value, reason) => {
+            if (reason === 'clear') {
+              setDomainSearchTerm('', {
+                shouldClearFilters: false
+                // refresh: true
+              });
+            } else if (event && event.type === 'change') {
+              setDomainSearchTerm(value, {
+                shouldClearFilters: false
+              });
+            }
+          }}
+        />
         <SearchBar
           initialValue={domainSearchTerm}
           value={domainSearchTerm}
           onChange={(value) => {
             if (location.pathname !== '/inventory') {
               history.push(`/inventory?q=${value}`);
-              setDomainSearchTerm(value, {
+              setDomainSearchTerm(typeof value === 'string' ? value : '', {
                 shouldClearFilters: false,
                 refresh: true
               });
             }
-            setDomainSearchTerm(value, {
+            setDomainSearchTerm(typeof value === 'string' ? value : '', {
               shouldClearFilters: false
             });
           }}
@@ -251,25 +324,61 @@ export const RegionAndOrganizationFilters: React.FC<
       <Divider />
       <Box padding={2}>
         <Autocomplete
-          options={regions}
+          options={regions.map((region) => `Region ${region}`)}
+          // defaultValue={`Region ${user?.regionId}`}
+          onChange={(e, selectedRegion) => {
+            const exists = regionFilterValues?.find(
+              (regionId) => regionId === selectedRegion?.replace('Region ', '')
+            );
+            if (exists) {
+              return;
+            } else {
+              addFilter(
+                REGION_FILTER_KEY,
+                selectedRegion?.replace('Region ', ''),
+                'any'
+              );
+            }
+            setTimeout(() => {
+              setIsOpen(false);
+            }, 250);
+          }}
+          // renderOption={(props, option) => (
+          //   <li {...props} key={option}>
+          //     <Button
+          //       sx={{
+          //         height: '100%',
+          //         width: '100%',
+          //         display: 'flex',
+          //         textAlign: 'left',
+          //         justifyContent: 'start',
+          //         fontWeight: 400,
+          //         color: 'black',
+          //         textTransform: 'none'
+          //       }}
+          //       id="region-filter-button"
+          //       onClick={() => {
+          //         setTimeout(() => {
+          //           addFilter(REGION_FILTER_KEY, option, 'any');
+          //           setIsOpen(false);
+          //         }, 250);
+          //       }}
+          //     >
+          //       {option}
+          //     </Button>
+          //   </li>
+          // )}
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Regions"
+              label="Region"
               onBlur={() => setIsOpen(false)}
+              disabled={userLevel !== GLOBAL_ADMIN}
             />
           )}
+          disabled={userLevel !== GLOBAL_ADMIN}
         />
-        <FilterTags filters={filters} removeFilter={removeFilter} />
       </Box>
-      {/* <Accordion
-        expanded={userLevel === STANDARD_USER ? true : undefined}
-        defaultExpanded
-      > */}
-      {/* <AccordionSummary expandIcon={<ExpandMore />}> */}
-      {/* <Typography>Region(s)</Typography> */}
-      {/* </AccordionSummary> */}
-      {/* <AccordionDetails> */}
       <List>
         {showUsersRegionDisabled && user?.regionId ? (
           <ListItem sx={{ padding: '0px' }} key={user?.regionId}>
@@ -296,18 +405,8 @@ export const RegionAndOrganizationFilters: React.FC<
           })
         )}
       </List>
-      {/* </AccordionDetails> */}
-      {/* </Accordion> */}
-      {/* <Accordion
-        defaultExpanded
-        expanded={userLevel === STANDARD_USER ? true : undefined}
-      >
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography>Organization(s)</Typography>
-        </AccordionSummary>
-        <AccordionDetails> */}
       {/* Need to reconcile type issues caused by adding freeSolo prop */}
-      {userLevel !== STANDARD_USER ? (
+      <Box padding={2}>
         <Autocomplete
           onInputChange={(e, v) => {
             if (e && e.type === 'change') {
@@ -371,14 +470,15 @@ export const RegionAndOrganizationFilters: React.FC<
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Search Organizations"
+              label="Organization"
+              helperText="Use the dropdown to select the organization you want to view."
               onBlur={() => setIsOpen(false)}
+              disabled={userLevel === STANDARD_USER}
             />
           )}
+          disabled={userLevel === STANDARD_USER}
         />
-      ) : (
-        <></>
-      )}
+      </Box>
       <List sx={{ width: '100%' }}>
         {organizationsInFilters?.map((org) => {
           return (
@@ -407,8 +507,14 @@ export const RegionAndOrganizationFilters: React.FC<
         })}
       </List>
       <br />
-      {/* </AccordionDetails>
-      </Accordion> */}
+      <Stack spacing={2} padding={2} direction="column" alignItems="center">
+        <Button variant="contained" sx={{ width: 'fit-content' }}>
+          Apply Filters
+        </Button>
+        <Button variant="text" size="small">
+          Reset
+        </Button>
+      </Stack>
     </>
   );
 };

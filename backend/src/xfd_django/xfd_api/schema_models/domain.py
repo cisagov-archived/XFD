@@ -160,6 +160,13 @@ class WebpageResponse(BaseModel):
         from_attributes = True
 
 
+class AutoDomainSearchBody(BaseModel):
+    """Elastic search domain model."""
+
+    regions: Optional[List[str]]
+    searchTerm: str
+
+
 class GetDomainResponse(BaseModel):
     """Get domain response."""
 

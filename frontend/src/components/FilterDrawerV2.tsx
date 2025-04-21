@@ -31,7 +31,8 @@ export const FilterDrawer: FC<
     searchTerm,
     setSearchTerm,
     filters,
-    initialFilters
+    initialFilters,
+    results
   } = props;
   const { pathname } = useLocation();
 
@@ -51,6 +52,7 @@ export const FilterDrawer: FC<
         filters={filters}
         setSearchTerm={setSearchTerm}
         searchTerm={searchTerm}
+        results={results}
       />
       {matchPath(
         ['/inventory', '/inventory/domains', '/inventory/vulnerabilities'],
@@ -99,13 +101,15 @@ export const FilterDrawerV2 = withSearch(
     filters,
     facets,
     searchTerm,
-    setSearchTerm
+    setSearchTerm,
+    results
   }: ContextType) => ({
     addFilter,
     removeFilter,
     filters,
     facets,
     searchTerm,
-    setSearchTerm
+    setSearchTerm,
+    results
   })
 )(FilterDrawer);

@@ -60,8 +60,7 @@ const Main = styled('main', {
 export const Layout: React.FC<PropsWithChildren<ContextType>> = ({
   children,
   filters,
-  addFilter,
-  removeFilter
+  addFilter
 }) => {
   const { logout, user } = useAuthContext();
 

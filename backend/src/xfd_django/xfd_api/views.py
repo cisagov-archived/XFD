@@ -17,7 +17,12 @@ from .api_methods import organization, proxy, scan, scan_tasks, user
 from .api_methods.blocklist import handle_check_ip
 from .api_methods.cpe import get_cpes_by_id
 from .api_methods.cve import get_cves_by_id, get_cves_by_name
-from .api_methods.domain import export_domains, get_domain_by_id, search_domains
+from .api_methods.domain import (
+    export_domains,
+    get_domain_by_id,
+    search_domains,
+    search_domains_task,
+)
 from .api_methods.queue_monitoring import list_queues
 from .api_methods.saved_search import (
     create_saved_search,
@@ -66,7 +71,12 @@ from .schema_models.api_key import ApiKey as ApiKeySchema
 from .schema_models.blocklist import BlocklistCheckResponse
 from .schema_models.cpe import Cpe as CpeSchema
 from .schema_models.cve import Cve as CveSchema
-from .schema_models.domain import DomainSearch, DomainSearchResponse, GetDomainResponse
+from .schema_models.domain import (
+    AutoDomainSearchBody,
+    DomainSearch,
+    DomainSearchResponse,
+    GetDomainResponse,
+)
 from .schema_models.notification import CreateNotificationSchema
 from .schema_models.notification import Notification as NotificationSchema
 from .schema_models.queue_monitoring import QueueListResponse, QueueSearch
@@ -321,6 +331,24 @@ async def call_export_domains(
 async def call_get_domain_by_id(domain_id: str):
     """Get domain by id."""
     return get_domain_by_id(domain_id)
+
+
+#  New domain search endpoint to populate domain names and ips for autocomplete
+@api_router.post(
+    "/search/domains",
+    dependencies=[Depends(get_current_active_user)],
+    # tags=["Organizations"],
+    tags=["Domains"],
+)
+# async def search_organizations(
+# search_body: OrganizationSchema.OrganizationSearchBody,
+async def search_domains_es(
+    search_body: AutoDomainSearchBody,
+    current_user: User = Depends(get_current_active_user),
+):
+    """Search for domains in Elasticsearch."""
+    # return organization.search_organizations_task(search_body, current_user)
+    return search_domains_task(search_body, current_user)
 
 
 # ========================================
