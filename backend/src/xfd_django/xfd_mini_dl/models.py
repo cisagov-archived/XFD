@@ -1274,6 +1274,20 @@ class User(AutoLengthCheckModel):
         default=False,
         help_text="A boolean field flagging if the user's invite is pending.",
     )
+    date_approved = models.DateTimeField(
+        db_column="date_approved",
+        blank=True,
+        null=True,
+        help_text="Date the user was approved to have access to the cyhy dashboard.",
+    )
+    approved_by = models.ForeignKey(
+        "User",
+        models.DO_NOTHING,
+        db_column="approved_by_id",
+        blank=True,
+        null=True,
+        help_text="Foreign key to the user who approved the user.",
+    )
     login_blocked_by_maintenance = models.BooleanField(
         db_column="login_blocked_by_maintenance",
         default=False,
@@ -1905,6 +1919,16 @@ class VulnScanSummary(models.Model):
         blank=True,
         help_text="Age of the longest open high ticket.",
     )
+    medium_max_age = models.IntegerField(
+        null=True,
+        blank=True,
+        help_text="Age of the longest open medium ticket.",
+    )
+    low_max_age = models.IntegerField(
+        null=True,
+        blank=True,
+        help_text="Age of the longest open low ticket.",
+    )
     # median age of current vulns by severity (requires 'firstDiscovered') <- age=enddate() - firstDiscovered(); where ticket.open=true by severity; sum(age)/count(by severity)
     # none_median_age = models.IntegerField(
     #     null=True,
@@ -1960,6 +1984,26 @@ class VulnScanSummary(models.Model):
         null=True,
         blank=True,
         help_text="Age of the longest open KEV ticket.",
+    )
+    critical_kev_max_age = models.IntegerField(
+        null=True,
+        blank=True,
+        help_text="Age of the longest open critical KEV ticket.",
+    )
+    high_kev_max_age = models.IntegerField(
+        null=True,
+        blank=True,
+        help_text="Age of the longest open high KEV ticket.",
+    )
+    medium_kev_max_age = models.IntegerField(
+        null=True,
+        blank=True,
+        help_text="Age of the longest open medium KEV ticket.",
+    )
+    low_kev_max_age = models.IntegerField(
+        null=True,
+        blank=True,
+        help_text="Age of the longest open low KEV ticket.",
     )
     one_to_five_vulns_count = models.IntegerField(
         null=True,
@@ -6205,7 +6249,7 @@ class XpanseServicesMdl(models.Model):
 
     xpanse_service_uid = models.UUIDField(
         primary_key=True,
-        default=uuid.uuid1,
+        default=uuid.uuid4,
         help_text="PK: Unique identifier for a Xpanse Service object.",
     )
     service_id = models.TextField(
